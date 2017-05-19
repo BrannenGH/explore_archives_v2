@@ -1,9 +1,8 @@
 {
-   "files":["./gulpfile.ts"],
    "exclude": [
-       "./node_modules"
+       "../node_modules"
    ],
-   "types":["gulp"],
+   "types":["express","mongoose"],
    "compilerOptions": {
     "target": "ES5",
     "jsx": "react"
