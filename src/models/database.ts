@@ -1,27 +1,23 @@
 import * as mongoose from "mongoose";
-import * as config from "../config.json";
+import * as bluebird from "bluebird";
 
-class Database {
+export class Database {
   public db : mongoose.connection;
   public Document: mongoose.model;
-  constructor() {
+
+  constructor(private config) {
     this.connectdb();
   }
 
   public connectdb(){
     mongoose.connect('mongodb://'+config["mongodb"]["location"]);
     this.db = mongoose.connection;
-//    this.db.use("explore_archives");
     this.db.on("error", console.error.bind(console, "connection error:"));
     var DocumentSchema = new mongoose.Schema({
-      archivelocation: String,
-      callnumber: String,
-      docnumber: Number,
-      featured: Boolean,
-      relevance: Number,
-      date: Array,
-      //fill with JSON object will all optional parameters
-      properties: JSON
+        featured: Boolean,
+        relevance: Number,
+        //fill with JSON object will all paramaters that are public facing, i.e. not internal
+        properties: JSON
     });
     this.Document = mongoose.model('Document', DocumentSchema);
     //console.log(this.Document.find(function(err, data){console.log(data);}).sort('odcnumber'));

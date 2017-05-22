@@ -1,23 +1,24 @@
 import * as express from 'express';
-import * as fs from 'fs';
 import * as bodyParser from 'body-parser';
 import * as apiru from '../routes/api';
 import * as staticru from '../routes/static';
 import * as errorru from '../routes/error'; 
 import * as database from "./database";
-import * as config from "../config.json";
+import * as path from "path";
 
 export class Server{
     public app : express.Application;
     public database : database.Database;
 
-    constructor() {
+    constructor(config) {
         this.app = express();
-        this.config();
-        this.database = database.Database.start();
-        let this.app.database = this.database;
+        this.config(config);
+        // Create a new instance of the MongoDB wrapper
+        this.database = new database.Database(config);
+        // Attach the mongoDB wrapper to the express function for reference in callbacks
+        this.app.database = this.database;
     }
-    public config() {
+    public config(config) {
         this.app.use(express.static(config["root"]+"/public/")));
         this.app.set('port', config["port"]);
         if (config["engine"] != "plain") {
@@ -35,3 +36,4 @@ export class Server{
         this.app.use("/error/",errorru);
         this.app.use("/api/",apiru);
     }
+}

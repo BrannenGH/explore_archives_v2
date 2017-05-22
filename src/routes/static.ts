@@ -5,15 +5,15 @@ import * as config from '../config.json';
 class RouteManager{
     public router;
     //Sets the static routes for the application
-    constructor(){
+    constructor(root){
         this.router = express.Router;
-        this.setroutes();
+        this.setroutes(root);
     }
-    setroutes(){
+    setroutes(root){
         this.router.get("/",function(req,res){
             res.render('index');
         });
-        var staticlist: Array<string> = this.retrieveroutes();
+        var staticlist: Array<string> = this.retrieveroutes(root);
         for(var i=0;i<staticlist.length;i++){
             this.router.get("/" + staticlist[i],function(req,res){
                 res.send(staticlist[i]);
@@ -21,7 +21,7 @@ class RouteManager{
         }
     }
     //Retrieves all the routes in the root directory's html folder
-    retrieveroutes(){
+    retrieveroutes(root:String){
         return fs.readdirSync(config["root"] + "/html/");
     }
 }
