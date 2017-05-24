@@ -1,39 +1,72 @@
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as apiru from '../routes/api';
-import * as staticru from '../routes/static';
-import * as errorru from '../routes/error'; 
+import * as Hapi from 'hapi';
+import * as Pug from 'pug';
 import * as database from "./database";
-import * as path from "path";
+import * as Vision from 'vision';
+import * as fs from "fs";
+import * as Inert from "inert";
+import * as Path from "path";
 
 export class Server{
-    public app : express.Application;
-    public database : database.Database;
+    public app : Hapi.Server;
+    //database : database.Database;
+    //Not used, in case middlewear to roll server options into is used
+    options : Hapi.ServerOptions;
 
     constructor(config) {
-        this.app = express();
-        this.config(config);
+        this.app = new Hapi.Server({'connections':{'routes':{'files':{relativeTo: Path.join(config["root"])}}}});
+        this.app.connection({"port":config["port"]});
+        console.log("Server being started at port " + config["port"]);
+        this.configplugins(config);
+        //this.routes(config);
+        console.log(this.app.info);
         // Create a new instance of the MongoDB wrapper
-        this.database = new database.Database(config);
+       //this.database = new database.Database(config);
         // Attach the mongoDB wrapper to the express function for reference in callbacks
-        this.app.database = this.database;
+        //this.app.database = this.database;
     }
-    public config(config) {
-        this.app.use(express.static(config["root"]+"/public/")));
-        this.app.set('port', config["port"]);
-        if (config["engine"] != "plain") {
-            this.app.set('view engine', config["engine"]);
+    configplugins(config) {
+        this.app.register([Vision,Inert], (err) =>{
+            if (err){
+                console.error("Could not load plugins");
+                process.exit(1);
+            }
+            this.app.views({
+                 'engines':{'pug' : Pug},
+                 'path':  "views",
+                 'relativeTo':config["root"],
+                 "allowAbsolutePaths":true
+                });
+            this.app.start(() => {
+                console.log("Server started at " + config["port"]);
+            }
         }
-        this.app.set('views', path.join(__dirname,"../../public/html"));
-
-        //allows JSON to be parsed when clients post stringified JSON
-        this.app.use(bodyParser.json());
-
-        this.app.listen(this.app.get('port'), function() {
-            console.log('App started and listening on port ' + this.app.get("port"));
+                this.app.route(this.configroutes(config,fs.readdirSync(config["root"]+"/views")));
+    }
+    configroutes(config: JSON,files : Array<String>) : Array<Hapi.RouteConfiguration>{
+        var routes: Array<Hapi.RouteConfiguration> =[
+            {"method":"GET", 'path': "/",handler: (request,reply) =>
+                {
+                    reply.view("./index.pug");
+                }
+            }
+        ]
+        for(var i=0; i < files.length; i++){
+            this.app.oneroute = files[i];
+            routes.push({ "method": 'GET', 'path': "/" + this.app.oneroute.substring(0, this.app.oneroute.indexOf('.')), handler: (request, reply) =>
+                {
+                    reply.view(['./',this.app.oneroute].join(''));
+                    console.log(this.app.oneroute + " is being sent because the client requested " + this.app.oneroute.substring(0, this.app.oneroute.indexOf('.')));
+                }
+            });
+        }
+        routes.push({"method": 'GET',"path": '/assets/{type}/{document}',"handler": (request,reply) => 
+            {
+                        reply.file(Path.join("./assets/",request.params.type,"/",request.params.document));
+            }
         });
-        this.app.use("/",staticru);
-        this.app.use("/error/",errorru);
-        this.app.use("/api/",apiru);
+        for (var i =0; i<routes.length;i++){
+                console.log(routes[i]["handler"].toString());
+        }
+        return routes;
     }
 }

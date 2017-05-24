@@ -1,28 +1,26 @@
-import * as express from 'express';
 import * as fs from 'fs';
-import * as config from '../config.json';
+import * as Promise from 'bluebird';
+Promise.promisifyAll(fs);
 
-class RouteManager{
-    public router;
+
+/*class RouteManager{
+    public routes:Array<JSON>
     //Sets the static routes for the application
-    constructor(root){
-        this.router = express.Router;
-        this.setroutes(root);
-    }
-    setroutes(root){
-        this.router.get("/",function(req,res){
-            res.render('index');
-        });
-        var staticlist: Array<string> = this.retrieveroutes(root);
-        for(var i=0;i<staticlist.length;i++){
-            this.router.get("/" + staticlist[i],function(req,res){
-                res.send(staticlist[i]);
-            });
-        }
+    constructor(config){
+        this.configureroutes(config[root]+"/html");
     }
     //Retrieves all the routes in the root directory's html folder
-    retrieveroutes(root:String){
-        return fs.readdirSync(config["root"] + "/html/");
-    }
+    retrieveroutes(htmlroot:String){
+        fs.readdirAsync(htmlroot).then(function(data){
+            for (var i = 0; i < data.length; i++){
+                this.routes.push({"method": 'GET',
+                "path": htmlroot + data[i],
+                "handler": function(request,reply) {
+                    reply(
+                }
+            }
+        }
+    //Takes the routes and configures them for module exports
+
 }
-}
+*/

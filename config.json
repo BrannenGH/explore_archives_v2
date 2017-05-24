@@ -1,6 +1,6 @@
 {
-    "port":80,
-    "root":"./public",
+    "port":3000,
+    "root":"/Users/brannenghh/Programming/v2_explore_archives/public",
     "engine":"pug",
     "mongodb":{
         "location":"localhost:27017/explore_archives"

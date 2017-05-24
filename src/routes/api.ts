@@ -1,3 +1,13 @@
+module.exports[
+    {}
+    {}
+]
+
+
+
+
+// Old express configuration
+/*
     this.app.get("/apip/:filters",function(req,res){
       var listofdocuments = {"documents":[]}
       req.app.database.Document.find(null,null,{sort: 'properties.machinelocation'},function(err,files){
@@ -20,3 +30,4 @@
       res.status(404).render("404");
     });
   }
+  */
