@@ -1,9 +1,13 @@
 # Routes
-# This file defines all application routes (Higher priority routes first)
-# https://www.playframework.com/documentation/latest/ScalaRouting
 
+#Static Routes
 GET     /                           controllers.HomeController.index
 GET     /documents      controllers.HomeController.document
 GET     /about                controllers.HomeController.about
 
+#Static Routes to assets
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+#RESTful api
+GET     /api/doc/:documentid    controllers.ApiController.documentidLookup(documentid)
+GET     /api/p/:page                     controllers.ApiController.pageLookup(page)

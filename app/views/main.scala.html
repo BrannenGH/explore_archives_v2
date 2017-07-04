@@ -1,9 +1,3 @@
-@*
- * This template is called from the `index` template. This template
- * handles the rendering of the page header and body tags. It takes
- * two arguments, a `String` for the title of the page and an `Html`
- * object to insert into the body of the page.
- *@
 @(title: String)(content: Html)
 
 <!DOCTYPE html>
@@ -12,14 +6,12 @@
         <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="https://unpkg.com/react@@15.3.1/dist/react.js"></script>
-        <script type="text/javascript" src="https://unpkg.com/react-dom@@15.3.1/dist/react-dom.js"></script>
         <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" text="text/css"/>
-        <link href="../assets/stylesheets/main.css" rel="stylesheet" text="text/css"/>
-        <title>@title</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <title>@title</title>
+
 
     </head>
     <body>
