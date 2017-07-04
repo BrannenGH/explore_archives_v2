@@ -1,0 +1,10 @@
+{
+   "exclude": [
+       "../node_modules"
+   ],
+   "types":["express","mongoose"],
+   "compilerOptions": {
+    "target": "ES6",
+    "jsx": "react"
+  } 
+}
