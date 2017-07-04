@@ -9,20 +9,55 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1"/>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://unpkg.com/react@@15.3.1/dist/react.js"></script>
         <script type="text/javascript" src="https://unpkg.com/react-dom@@15.3.1/dist/react-dom.js"></script>
         <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" text="text/css"/>
-        <link href="../assets/css/main.css" rel="stylesheet" text="text/css"/>
+        <link href="../assets/stylesheets/main.css" rel="stylesheet" text="text/css"/>
         <title>@title</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
 
     </head>
     <body>
+        <div class="wrap">
+            <div class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only" />
+                            <span class="icon-bar" />
+                        </button>
+                        <a class="navbar-brand" href="#" />
+                        <div class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <img href="umn.edu" alt="The University of Minnesota" src="../assets/images/MN_logo.png" style="max-width: 60px; margin-top: 10px;"/>
+                                </li>
+                                <li>
+                                    <p class="navbar-text">Italian Immigrant Stories</p>
+                                </li>
+                                <li>
+                                    <a href="/">Home</a>
+                                </li>
+                                <li>
+                                    <a href="/documents">Document Search</a>
+                                </li>
+                                <li>
+                                    <a href="/#visiting">Visiting</a>
+                                </li>
+                                <li>
+                                    <a href="/about">About the Project</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @content
 
       <div class="push"></div><hr/>
