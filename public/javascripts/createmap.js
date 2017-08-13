@@ -4,7 +4,7 @@ function initMap() {
         zoom: 3
      });
      var markerlist = {};
-     $.getJSON("/apip/none",function(data){
+     $.getJSON("/api/p/1",function(data){
         $.each(data, function(key, value){
             for (var i=0; i<value.length; i++){
  /*               { var z = i; console.log(z); console.log(value[z]["Document"].length);
