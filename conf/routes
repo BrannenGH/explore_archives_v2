@@ -10,4 +10,4 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 #RESTful api
 GET     /api/doc/:documentid    controllers.ApiController.documentidLookup(documentid)
-GET     /api/p/:page                     controllers.ApiController.pageLookup(page)
+#GET     /api/p/:page                     controllers.ApiController.pageLookup(page)
